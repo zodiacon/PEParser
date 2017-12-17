@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zodiacon.PEParsing", "Zodiacon.PEParsing\Zodiacon.PEParsing.csproj", "{D9A89766-0F3F-4760-8595-31F5A2179D5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumpPE", "DumpPE\DumpPE.csproj", "{53EF2BF3-44A7-4C4D-AF2E-5CB52487FE22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9A89766-0F3F-4760-8595-31F5A2179D5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A89766-0F3F-4760-8595-31F5A2179D5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A89766-0F3F-4760-8595-31F5A2179D5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A89766-0F3F-4760-8595-31F5A2179D5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53EF2BF3-44A7-4C4D-AF2E-5CB52487FE22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53EF2BF3-44A7-4C4D-AF2E-5CB52487FE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53EF2BF3-44A7-4C4D-AF2E-5CB52487FE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53EF2BF3-44A7-4C4D-AF2E-5CB52487FE22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA715572-432C-4766-A33E-92AD9986A59F}
+	EndGlobalSection
+EndGlobal
