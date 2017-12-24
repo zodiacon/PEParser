@@ -62,7 +62,8 @@ namespace Zodiacon.PEParsing {
 		Misc,
 		Exception,
 		Fixup,
-		Borland = 9
+		Borland = 9,
+        Repro = 16
 	}
 
 	[Flags]

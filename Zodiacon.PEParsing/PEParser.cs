@@ -93,7 +93,7 @@ namespace Zodiacon.PEParsing {
 
         public int RvaToFileOffset(int rva) {
             for (int i = 0; i < _sections.Length; ++i) {
-                if (rva >= _sections[i].VirtualAddress && rva < _sections[i].VirtualAddress + _sections[i].SizeOfRawData)
+                if (rva >= _sections[i].VirtualAddress && rva < _sections[i].VirtualAddress + _sections[i].VirtualSize)
                     return _sections[i].PointerToRawData + rva - _sections[i].VirtualAddress;
             }
 
@@ -263,6 +263,9 @@ namespace Zodiacon.PEParsing {
 
         public unsafe ICollection<ExportedSymbol> GetExports() {
             var dir = OptionalHeader.ExportDirectory;
+            if (dir.Size == 0)
+                return null;
+
             var offset = RvaToFileOffset(dir.VirtualAddress);
             var exportDirectory = Read<IMAGE_EXPORT_DIRECTORY>(offset);
 
@@ -344,6 +347,20 @@ namespace Zodiacon.PEParsing {
 
 
             return loadConfig;
+        }
+
+        public DebugInformation GetDebugInformation() {
+            var dir = OptionalHeader.DebugDirectory;
+            if (dir.Size == 0)
+                return null;    // no debug information
+
+            var offset = RvaToFileOffset(dir.VirtualAddress);
+            var debugDirectory = Read<IMAGE_DEBUG_DIRECTORY>(offset);
+            // sanity check
+            Debug.Assert(debugDirectory.Characteristics == 0);
+
+            var debugInfo = new DebugInformation(debugDirectory);
+            return debugInfo;
         }
 
         public ICollection<SectionHeader> GetSectionHeaders() {

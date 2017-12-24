@@ -34,7 +34,10 @@ namespace DumpPE {
             var exports = parser.GetExports();
             if (exports != null) {
                 foreach (var export in exports) {
-                    Console.WriteLine($"{export.Name} {export.Ordinal} 0x{export.Address:X}");
+                    if(export.ForwardName != null)
+                        Console.WriteLine($"Forward name: {export.ForwardName}");
+                    else
+                        Console.WriteLine($"{export.Name} {export.Ordinal} 0x{export.Address:X}");
                 }
             }
 
@@ -49,6 +52,12 @@ namespace DumpPE {
                 }
             }
 
+            Console.WriteLine();
+            Console.WriteLine("Debug Information:");
+            var debug = parser.GetDebugInformation();
+            if (debug != null) {
+                WriteObject(debug);
+            }
         }
 
         private static void WriteObject(object obj) {
