@@ -47,6 +47,9 @@ namespace Zodiacon.PEParsing {
 
         void CalcHeaders() {
             _dosHeader = (IMAGE_DOS_HEADER*)_address;
+            if (_dosHeader->e_magic != 0x5a4d || _dosHeader->e_lfanew > 1 << 12)
+                throw new BadImageFormatException("Not a PE file");
+
             _ntHeaders32 = (IMAGE_NT_HEADERS32*)(_address + _dosHeader->e_lfanew);
             _ntHeaders64 = (IMAGE_NT_HEADERS64*)(_address + _dosHeader->e_lfanew);
             _isPE64 = _ntHeaders32->OptionalHeader.Magic == (ushort)OptionalHeaderMagic.PE32Plus;
@@ -77,6 +80,11 @@ namespace Zodiacon.PEParsing {
             var p = _address + offset;
             Buffer.MemoryCopy(p, _workBuffer.ToPointer(), Marshal.SizeOf<T>(), Marshal.SizeOf<T>());
             return (T)Marshal.PtrToStructure(_workBuffer, typeof(T));
+        }
+
+        public void Read(int offset, int size, void* buffer) {
+            var p = _address + offset;
+            Buffer.MemoryCopy(p, buffer, size, size);
         }
 
         public void ReadArray<T>(int offset, T[] buffer, int startIndex, int count) where T : struct {
@@ -268,6 +276,11 @@ namespace Zodiacon.PEParsing {
 
             var offset = RvaToFileOffset(dir.VirtualAddress);
             var exportDirectory = Read<IMAGE_EXPORT_DIRECTORY>(offset);
+
+            //var nameOffset = RvaToFileOffset(exportDirectory.Name);
+            //var nameBuffer = stackalloc sbyte[64];
+            //Read(nameOffset, 64, nameBuffer);
+            //var tableName = new string(nameBuffer);
 
             var count = exportDirectory.NumberOfNames;
             var exports = new List<ExportedSymbol>(count);
